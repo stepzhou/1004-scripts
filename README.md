@@ -40,7 +40,7 @@ The emails should be newline separated, e.g.
 
 **grade_report_path:**
 
-Directly that contains the grade reports named as UNI.txt
+Directory that contains the grade reports named as UNI.txt
 
 Example
 -------
