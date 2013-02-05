@@ -16,22 +16,33 @@ class MassMail(object):
         self.init_mailserver(user, pwd, server, port)
     
     def init_mailserver(self, user, pwd, server, port):
+        """
+        Set up the smtp mailserver
+        """
         self.smtp = smtplib.SMTP(server, port)
+        # TLS handshake
         self.smtp.ehlo()
         self.smtp.starttls()
         self.smtp.ehlo()
         self.smtp.login(user, pwd)
 
     def mass_send(self, send_list, path, subject, text):
+        """
+        Mass sends emails in send_list
+        """
         for s in send_list:
             uni = s.split('@')[0]
             f = os.path.join(path, uni + ".txt")
             self.send([s], subject, text, files=[f])
 
     def send(self, send_to, subject, text, files=[]):
+        """
+        Sends one email
+        """
         assert type(send_to) == list
         assert type(files) == list
 
+        # Setting up email msg protocol
         msg = MIMEMultipart()
         msg['From'] = self.send_from
         msg['To'] = COMMASPACE.join(send_to)
@@ -40,6 +51,7 @@ class MassMail(object):
 
         msg.attach(MIMEText(text))
 
+        # Message does not send if expected file is not found
         try:
             for f in files:
                 part = MIMEBase('application', "octet-stream")
@@ -70,6 +82,7 @@ if __name__ == "__main__":
     students = students_file.read().strip().split('\n')
     students_file.close()
 
+    # smtp credentials
     USER = credentials.USERNAME
     PWD = credentials.PWD 
     SERVER = "smtp.gmail.com"
