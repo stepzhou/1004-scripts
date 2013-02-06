@@ -6,14 +6,13 @@ Simple tool for mass sending grade report emails.
 Usage
 -----
 
+Fill out config.py with the your smtp configurations.
+
+See sample for config examples.
+
+Then run script in following format
+
     python mass_send.py <email_text> <UNI_emails> <grade_report_path>
-
-Have another file called credentials.py with the following:
-
-    credentials.py
-
-    USERNAME = '<your_gmail_username>'
-    PWD = '<your_gmail_pwd>'
 
 **email_text:**
 
@@ -21,12 +20,8 @@ Text file of the email in the format of:
 
     SUBJECT
     BODY
-    BODY
-    BODY
-    ...
 
-In that the subject is one line ending in a newline, and the rest of the file is
-the body.
+First line is email subject. Rest is body.
 
 **UNI_emails:**
 
@@ -36,7 +31,7 @@ The emails should be newline separated, e.g.
 
     aaa1001@columbia.edu
     bbb2002@barnard.edu
-    etc.
+    ...
 
 **grade_report_path:**
 

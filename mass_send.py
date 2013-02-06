@@ -1,7 +1,7 @@
 import smtplib
 import os
 import sys
-import credentials
+import config
 
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
@@ -14,17 +14,27 @@ class MassMail(object):
     def __init__(self, user, pwd, server, port=None):
         self.send_from = user
         self.init_mailserver(user, pwd, server, port)
+
     
-    def init_mailserver(self, user, pwd, server, port):
+    def init_mailserver(self, user, pwd, server, port, auth):
         """
         Set up the smtp mailserver
         """
-        self.smtp = smtplib.SMTP(server, port)
+        if port:
+            self.smtp = smtplib.SMTP(server, port)
+        else:
+            self.smtp = smtplib.SMTP(server)
+
         # TLS handshake
-        self.smtp.ehlo()
-        self.smtp.starttls()
-        self.smtp.ehlo()
-        self.smtp.login(user, pwd)
+        if auth == "tls":
+            self.smtp.ehlo()
+            self.smtp.starttls()
+            self.smtp.ehlo()
+            self.smtp.login(user, pwd)
+
+        # TODO: ssl authentication
+        if auth == "ssl":
+            pass
 
     def mass_send(self, send_list, path, subject, text):
         """
@@ -68,7 +78,16 @@ class MassMail(object):
     def close(self):
         self.smtp.quit()
 
+def help():
+    print"""
+        python mass_send.py <your_email> <uni_list> <grade_report_directory>
+    """
+
 if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        help()
+        exit(1)
+
     email_file_path = sys.argv[1]
     students_file_path = sys.argv[2]
     reports_path = sys.argv[3]
@@ -82,13 +101,14 @@ if __name__ == "__main__":
     students = students_file.read().strip().split('\n')
     students_file.close()
 
-    # smtp credentials
-    USER = credentials.USERNAME
-    PWD = credentials.PWD 
-    SERVER = "smtp.gmail.com"
-    PORT = 587
+    # smtp config
+    USER = config.USERNAME
+    PWD = config.PWD 
+    SERVER = config.SERVER
+    PORT = config.PORT
+    AUTH = config.AUTHENTICATION
     
-    sender = MassMail(USER, PWD, SERVER, PORT)
+    sender = MassMail(USER, PWD, SERVER, PORT, AUTH)
     sender.mass_send(students, reports_path, subject, text)
     sender.close()
 

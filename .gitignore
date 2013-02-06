@@ -2,4 +2,3 @@
 *.txt
 .*.swp
 tests/
-credentials.py
