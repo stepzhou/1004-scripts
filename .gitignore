@@ -2,3 +2,5 @@
 *.txt
 .*.swp
 tests/
+
+untar_instructions.txt
