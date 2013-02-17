@@ -50,5 +50,5 @@ makes a uni.txt file copy of the grade report.
 
 **Example**
     
-    cd hwk1
-    perl ../untar.pl  . ../grade_report.txt
+    perl untar.pl hwk1/  grade_report.txt
+
