@@ -11,7 +11,7 @@ from email import Encoders
 
 class MassMail(object):
 
-    def __init__(self, user, pwd, server, port=None, auth):
+    def __init__(self, user, pwd, server, auth, port=None):
         self.send_from = user
         self.init_mailserver(user, pwd, server, port, auth)
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     PORT = config.PORT
     AUTH = config.AUTHENTICATION
     
-    sender = MassMail(USER, PWD, SERVER, PORT, AUTH)
+    sender = MassMail(USER, PWD, SERVER, AUTH, PORT)
     sender.mass_send(students, reports_path, subject, text)
     sender.close()
 
