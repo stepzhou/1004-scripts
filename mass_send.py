@@ -11,9 +11,9 @@ from email import Encoders
 
 class MassMail(object):
 
-    def __init__(self, user, pwd, server, port=None):
+    def __init__(self, user, pwd, server, port=None, auth):
         self.send_from = user
-        self.init_mailserver(user, pwd, server, port)
+        self.init_mailserver(user, pwd, server, port, auth)
 
     
     def init_mailserver(self, user, pwd, server, port, auth):
