@@ -72,8 +72,10 @@ class MassMail(object):
                 msg.attach(part)
 
             self.smtp.sendmail(self.send_from, send_to, msg.as_string())    
+            print "Message sent to: " + send_to
         except IOError:
-            sys.stderr.write(str(files) + " doesn't exist\n")
+            print "Message not sent to %s. %s doesn't exist" % 
+                    (send_to, str(files))
     
     def close(self):
         self.smtp.quit()
