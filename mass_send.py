@@ -56,6 +56,7 @@ class MassMail(object):
         msg = MIMEMultipart()
         msg['From'] = self.send_from
         msg['To'] = COMMASPACE.join(send_to)
+        msg['Cc'] = [self.send_from]
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
@@ -72,10 +73,10 @@ class MassMail(object):
                 msg.attach(part)
 
             self.smtp.sendmail(self.send_from, send_to, msg.as_string())    
-            print "Message sent to: " + send_to
+            print "Message sent to: " + str(send_to)
         except IOError:
-            print "Message not sent to %s. %s doesn't exist" % 
-                    (send_to, str(files))
+            print "Message not sent to %s. %s doesn't exist" % (str(send_to), 
+                    str(files))
     
     def close(self):
         self.smtp.quit()
