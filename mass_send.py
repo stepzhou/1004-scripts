@@ -56,7 +56,7 @@ class MassMail(object):
         msg = MIMEMultipart()
         msg['From'] = self.send_from
         msg['To'] = COMMASPACE.join(send_to)
-        msg['Cc'] = [self.send_from]
+        msg['Cc'] = self.send_from
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
