@@ -2,9 +2,12 @@ import re
 import sys
 
 def convert(tm_string):
+    # replacing state 1 with starting state 0
     tm_string = re.sub(r'(\d [\d\w] [\d\w]) 1 ([rl])', r'\1 0 \2', tm_string)
     tm_string = re.sub(r'1 ([^ ] [^ ] [^ ] [^ ])', r'0 \1', tm_string)
+    # switch last two elements
     tm_string = re.sub(r'(\d) ([rl])', r'\2 \1', tm_string)
+    # replace b with _
     tm_string = re.sub(r'b', r'_', tm_string)
     return tm_string
 
